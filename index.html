@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Quieres ser mi dúo dinámico?</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+      text-align: center;
+    }
+    .card {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      max-width: 420px;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #ff4ecd;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1em;
+      border-radius: 30px;
+      cursor: pointer;
+      color: white;
+    }
+    #poema {
+      margin-top: 20px;
+      font-size: 1.1em;
+      display: none;
+      line-height: 1.5;
+    }
+    #imagen {
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>¿Quieres ser mi dúo dinámico? ⚡💙</h1>
+    <button onclick="mostrarPoema()">Sí 💫</button>
+
+    <div id="poema">
+      <p>
+        Gracias por aceptar ser mi dúo,<br>
+        mi apoyo, mi risa, mi razón.<br>
+        Contigo todo pesa menos,<br>
+        y cada paso tiene dirección.<br><br>
+
+        Gracias por decir que sí sin miedo,<br>
+        por caminar a mi lado sin dudar.<br>
+        Si la vida es un juego difícil,<br>
+        contigo siempre quiero jugar. ⚡💙
+      </p>
+    </div>
+
+    <!-- IMAGEN -->
+    <img id="imagen" src="imagen.png" alt="Dúo dinámico">
+  </div>
+
+  <script>
+    function mostrarPoema() {
+      document.getElementById("poema").style.display = "block";
+      document.getElementById("imagen").style.display = "block";
+    }
+  </script>
+</body>
+</html>
