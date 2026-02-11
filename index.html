@@ -5,7 +5,7 @@
   <title>¿Quieres ser mi dúo dinámico?</title>
   <style>
     body {
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      background: radial-gradient(circle at top, #1a2a6c, #0f2027);
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -14,69 +14,153 @@
       margin: 0;
       color: white;
       text-align: center;
+      overflow: hidden;
     }
+
     .card {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0,0,0,0.4);
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border-radius: 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       max-width: 420px;
+      position: relative;
+      z-index: 2;
     }
+
     h1 {
       font-size: 2em;
       margin-bottom: 20px;
     }
+
     button {
-      background: #ff4ecd;
       border: none;
       padding: 15px 30px;
       font-size: 1.1em;
       border-radius: 30px;
       cursor: pointer;
+      margin: 10px;
       color: white;
+      transition: transform 0.3s ease;
     }
+
+    #si { background: #ff5fd8; }
+    #no {
+      background: #555;
+      position: absolute;
+    }
+
     #poema {
-      margin-top: 20px;
-      font-size: 1.1em;
       display: none;
+      margin-top: 20px;
       line-height: 1.5;
+      font-size: 1.1em;
     }
+
     #imagen {
+      display: none;
       margin-top: 20px;
       width: 100%;
       border-radius: 15px;
-      display: none;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -10px;
+      font-size: 22px;
+      animation: subir 6s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes subir {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>¿Quieres ser mi dúo dinámico? ⚡💙</h1>
-    <button onclick="mostrarPoema()">Sí 💫</button>
 
-    <div id="poema">
-      <p>
-        Gracias por aceptar ser mi dúo,<br>
-        mi apoyo, mi risa, mi razón.<br>
-        Contigo todo pesa menos,<br>
-        y cada paso tiene dirección.<br><br>
+<!-- Música mientras elige -->
+<audio id="musicaElegir" loop>
+  <source src="musica1.mp3" type="audio/mpeg">
+</audio>
 
-        Gracias por decir que sí sin miedo,<br>
-        por caminar a mi lado sin dudar.<br>
-        Si la vida es un juego difícil,<br>
-        contigo siempre quiero jugar. ⚡💙
-      </p>
-    </div>
+<!-- Música final -->
+<audio id="musicaFinal" loop>
+  <source src="musica2.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- IMAGEN -->
-    <img id="imagen" src="imagen.png" alt="Dúo dinámico">
+<div class="card">
+  <h1 id="titulo">¿Quieres ser mi dúo dinámico? ⚡💙</h1>
+
+  <button id="si" onclick="aceptar()">Sí 💫</button>
+  <button id="no" onmouseover="decirNo()">No 🙄</button>
+
+  <div id="poema">
+    <p>
+      Gracias por aceptar ser mi dúo,<br>
+      mi apoyo, mi risa, mi razón.<br>
+      Contigo todo pesa menos,<br>
+      y cada paso tiene dirección.<br><br>
+
+      Gracias por decir que sí sin miedo,<br>
+      por caminar a mi lado sin dudar.<br>
+      Si la vida es un juego difícil,<br>
+      contigo siempre quiero jugar. 💙
+    </p>
   </div>
 
-  <script>
-    function mostrarPoema() {
-      document.getElementById("poema").style.display = "block";
-      document.getElementById("imagen").style.display = "block";
-    }
-  </script>
+  <img id="imagen" src="imagen.png" alt="Dúo dinámico">
+</div>
+
+<script>
+  let escalaSi = 1;
+  let escalaNo = 1;
+
+  // empieza música de elección al tocar pantalla
+  document.body.addEventListener("click", () => {
+    document.getElementById("musicaElegir").play();
+  }, { once: true });
+
+  function decirNo() {
+    const si = document.getElementById("si");
+    const no = document.getElementById("no");
+
+    escalaSi += 0.2;
+    escalaNo -= 0.15;
+    if (escalaNo < 0.3) escalaNo = 0.3;
+
+    si.style.transform = `scale(${escalaSi})`;
+    no.style.transform = `scale(${escalaNo})`;
+
+    no.style.left = Math.random() * 200 + "px";
+    no.style.top = Math.random() * 120 + "px";
+  }
+
+  function aceptar() {
+    document.getElementById("musicaElegir").pause();
+    document.getElementById("musicaFinal").play();
+
+    document.getElementById("si").style.display = "none";
+    document.getElementById("no").style.display = "none";
+    document.getElementById("titulo").style.display = "none";
+
+    document.getElementById("poema").style.display = "block";
+    document.getElementById("imagen").style.display = "block";
+
+    corazones();
+  }
+
+  function corazones() {
+    setInterval(() => {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "💙";
+      h.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
+    }, 400);
+  }
+</script>
+
 </body>
 </html>
